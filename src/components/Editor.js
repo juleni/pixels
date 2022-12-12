@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { CirclePicker } from "react-color";
 import "../styles/editor.scss";
+import DrawingPanel from "./DrawingPanel";
 
 export default function Editor() {
   const DEFAULT_BUTTON_TEXT = "START DRAWING";
@@ -17,6 +19,10 @@ export default function Editor() {
     buttonText === DEFAULT_BUTTON_TEXT
       ? setButtonText("RESET")
       : setButtonText(DEFAULT_BUTTON_TEXT);
+  }
+
+  function changeColor(color) {
+    setSelectedColor(color.hex);
   }
 
   return (
@@ -53,6 +59,16 @@ export default function Editor() {
       <button className="button" onClick={initializeDrawingPanel}>
         {buttonText}
       </button>
+
+      {hideOptions && (
+        <CirclePicker color={selectedColor} onChangeComplete={changeColor} />
+      )}
+
+      <DrawingPanel
+        width={panelWidth}
+        height={panelHeight}
+        selectedColor={selectedColor}
+      />
     </div>
   );
 }
